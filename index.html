@@ -6,7 +6,9 @@
     <script src="https://cdn.jsdelivr.net/npm/flv.js/dist/flv.min.js"></script>
 </head>
 <body>
-    <video id="videoElement" controls style="width:100%;height:auto;"></video>
+
+    <!-- 添加 autoplay 和 muted 属性 -->
+    <video id="videoElement" controls autoplay muted style="width:100%;height:auto;"></video>
 
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -20,12 +22,19 @@
                 type: 'flv',
                 url: 'https://flv.oceanliangcn.workers.dev/?url=' + encodeURIComponent(realUrl)
             });
+
+            // 绑定视频播放器并播放
             flvPlayer.attachMediaElement(videoElement);
             flvPlayer.load();
-            flvPlayer.play();
+
+            // 强制播放视频并处理可能的错误
+            flvPlayer.play().catch(function(error) {
+                console.error("播放失败:", error);
+            });
         } else {
             alert("浏览器不支持 flv.js");
         }
     </script>
+
 </body>
 </html>
