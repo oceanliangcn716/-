@@ -9,11 +9,16 @@
     <video id="videoElement" controls style="width:100%;height:auto;"></video>
 
     <script>
-        if (flvjs.isSupported()) {
+        const params = new URLSearchParams(window.location.search);
+        const realUrl = params.get("url");
+
+        if (!realUrl) {
+            document.body.innerHTML = "Missing video url parameter";
+        } else if (flvjs.isSupported()) {
             var videoElement = document.getElementById('videoElement');
             var flvPlayer = flvjs.createPlayer({
                 type: 'flv',
-                url: 'https://你的worker.workers.dev/?url=真实flv地址'
+                url: 'https://flv.oceanliangcn.workers.dev/?url=' + encodeURIComponent(realUrl)
             });
             flvPlayer.attachMediaElement(videoElement);
             flvPlayer.load();
@@ -24,5 +29,3 @@
     </script>
 </body>
 </html>
-
-
